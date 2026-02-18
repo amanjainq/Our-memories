@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Memories ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+overflow:hidden;
+background:black;
+color:white;
+}
+
+/* SLIDESHOW */
+#slideshow{
+position:relative;
+height:100vh;
+width:100%;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:opacity 1.5s ease-in-out;
+}
+
+.active{
+opacity:1;
+}
+
+/* SURPRISE BOX */
+#surpriseBox{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+background:rgba(0,0,0,0.6);
+padding:30px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+}
+
+#surpriseBtn{
+margin-top:15px;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#ff4d6d;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* MESSAGE PAGE */
+#messagePage{
+display:none;
+height:100vh;
+width:100%;
+position:relative;
+text-align:center;
+overflow:auto;
+}
+
+.blur-bg{
+position:absolute;
+width:100%;
+height:100%;
+background:url('pic1.jpg') center/cover no-repeat;
+filter:blur(10px) brightness(50%);
+z-index:-1;
+}
+
+.message-content{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90%;
+max-width:400px;
+padding:25px;
+font-size:18px;
+line-height:1.7;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+border-radius:20px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SLIDESHOW -->
+<div id="slideshow">
+
+<img src="C:\Users\Dell\OneDrive\Desktop\Memories\pic6.jpg.jpg" class="slide active">
+<img src="C:\Users\Dell\OneDrive\Desktop\Memories\pic2.jpg.jpeg" class="slide">
+<img src="C:\Users\Dell\OneDrive\Desktop\Memories\pic1.jpg.jpeg" class="slide">
+<img src="C:\Users\Dell\OneDrive\Desktop\Memories\pic3.jpg.jpeg" class="slide">
+
+<div id="surpriseBox">
+<h2>I have something special for you ❤️</h2>
+<button onclick="showMessage()">Open Surprise ✨</button>
+</div>
+
+<audio id="song1" autoplay loop>
+<source src="song1.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<!-- MESSAGE PAGE -->
+<div id="messagePage">
+<div class="blur-bg"></div>
+
+<div class="message-content">
+<h2>For You ❤️</h2>
+
+<p>
+Every picture tells our story.  
+Every moment holds a memory.  
+
+These small memories mean more  
+than words can ever explain.  
+
+Yaad hai woh pehli mulaqat? Tab hum bilkul strangers the… aur aaj bina baat kiye din adhura lagta hai. 🥺💬
+Pehle tum khud message karke bol deti thi, Yaad bhi nahi aati kya? aur woh choti si baat bhi special lagti thi. 💛
+
+Time ke saath bahut kuch change hua… par hamari dosti nahi..🤞✨
+Ups and downs aaye, timing kabhi sahi nahi rahi… par jab bhi zarurat padi, hum hamesha ek dusre ke liye the.
+
+Bas next time jab main bolun RUK JAO… toh shayad ruk jaana. ❤️
+Kya pata… phir mauka mile ya na mile...🥺🤌
+<p>🤗💛😘</p>
+
+</p>
+
+<button onclick="goToQuestions()">Next QN ➜</button>
+
+</div>
+</div>
+
+<!-- QUESTION PAGE -->
+<div id="questionPage" style="display:none; height:100vh; overflow:auto; padding:40px 20px; text-align:center; background:black;">
+
+<h2>Ek chota sa sawaal 💭</h2>
+<p><b>Hint:</b> Jo bhi bolna sache dil se bolna… kisi ko nahi bataunga 🤞❤️</p>
+
+<p>1️⃣ Agar tujhe ek word dil se bolna ho mere baare me, wo kya hoga?</p>
+<p>2️⃣ Kab last time tu dil se hasa tha hamari friendship me?</p>
+<p>3️⃣ Main tere liye kya kar sakta hoon jisse tu better feel kare?</p>
+<p>4️⃣ Kaunsi cheez tujhe sabse zyada hurt karti hai par tu batata nahi? (Friendship me)</p>
+
+<button onclick="goToFinal()">Submit ❤️</button>
+
+</div>
+
+<!-- FINAL PAGE -->
+<div id="finalPage" style="display:none; height:100vh; text-align:center; padding-top:30vh; background:black;">
+
+<h2>Thank you for Being in My Life ❤️</h2>
+<p>Tu sirf dost nahi… meri bestieee hai 😌✨</p>
+
+<button onclick="playVoice()">Open Voice Note 🎙️</button>
+
+</div>
+<audio id="voiceNote">
+<source src="C:\Users\Dell\OneDrive\Desktop\Memories\Jeete Jeete War 2 128 Kbps (mp3cut.net).mp3" type="audio/mpeg">
+</audio>
+<p style="margin-top:20px;">🤗💛😘</p>
+</div>
+
+<script>
+let slides=document.querySelectorAll(".slide");
+let current=0;
+let intervalTime=4000;
+
+let slideInterval=setInterval(nextSlide,intervalTime);
+
+function nextSlide(){
+slides[current].classList.remove("active");
+current++;
+
+if(current>=slides.length){
+clearInterval(slideInterval);
+document.getElementById("surpriseBox").style.display="block";
+return;
+}
+
+slides[current].classList.add("active");
+}
+
+function showMessage(){
+document.getElementById("slideshow").style.display="none";
+document.getElementById("messagePage").style.display="block";
+document.getElementById("song1").pause();
+}
+
+function goToQuestions(){
+document.getElementById("messagePage").style.display="none";
+document.getElementById("questionPage").style.display="block";
+}
+
+function goToFinal(){
+document.getElementById("questionPage").style.display="none";
+document.getElementById("finalPage").style.display="block";
+}
+
+function playVoice(){
+document.getElementById("voiceNote").play();
+}
+
+</script>
+
+</body>
+</html>
